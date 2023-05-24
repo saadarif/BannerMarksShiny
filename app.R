@@ -32,7 +32,7 @@ server <- function(input, output, session) {
     if(is.null(input$scoreSheet))
       return(NULL)
     bt <-read_excel(input$bannerTemplate$datapath, 1 )
-    ss <- read_excel(input$scoreSheet$datapath, 1, na=c("-","",))
+    ss <- read_excel(input$scoreSheet$datapath, 1, na=c("-",""))
     CWComp = as.name(input$CW)
     for(id in ss$Username) {
       if(!(is.na(ss[CWComp][ss["Username"] == id]))) {
