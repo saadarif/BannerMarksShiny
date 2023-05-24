@@ -1,7 +1,7 @@
 library(readxl)
 
-BT <- read_excel("~/Downloads/202301_51175_1_CWS2WEEK12.xlsx")
-scores <- read_excel("~/Downloads/BIOL5002 (2023011) Grades.xlsx", na=c("-",""))
+BT <- read_excel("./TestData/202301_51175_1_CWS2WEEK12.xlsx")
+scores <- read_excel("./TestData/BIOL5002 (2023011) Grades (1).xlsx", na=c("-",""))
 
 
 for(id in scores$Username) {
