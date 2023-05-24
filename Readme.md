@@ -1,4 +1,6 @@
-### A shiny app to autofill marks from a Banner Course Component Template
+Upload your marksheet. Download this sheet from Moodle.
+IMPORTANT: Don't Change anything in the downloaded sheet except the headers for the CW scores, that match their component name on 
+Banner (eg. CWS2WEEk6). Save the file as .xlsx### A shiny app to autofill marks from a Banner Course Component Template
 
 ## Instructions
 
@@ -7,8 +9,8 @@ in your marksheet should be the same (eg. CWS2WEEk6).
 
 2. Upload the template file for the course component as exported from Banner. **This file should be in the *.xlsx* format**.
 
-3. Upload your marksheet. For now the best thing is to download marks from moodle. Keep the downloaded sheet as is but change the 
-headers for the scores to match their component name on Banner (eg. CWS2WEEk6).
+3. Upload your marksheet. Download this sheet from Moodle. **IMPORTANT**: Don't Change anything in the downloaded sheet except the 
+headers for the CW scores, that match their component name on Banner (eg. CWS2WEEk6). *Save this file as .xlsx*
 
 4. Download the file using the button. This file should be able to be imported into Banner as is!!! 
 
