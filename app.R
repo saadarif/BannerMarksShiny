@@ -9,11 +9,16 @@ library(openxlsx)
 #3) Course component id as it appears on banner
 
 ui <- fluidPage(
-  textInput("CW", "Enter the course component code as it appears on Banner (and should be the same in your Marksheet)"),
-  fileInput("bannerTemplate", NULL, buttonLabel = "Banner Template Sheet...", accept = ".xlsx"),
-  fileInput("scoreSheet", NULL, buttonLabel = "Your Marksheet...", accept = ".xlsx"),
-  #tableOutput("df"),
-  downloadButton("download1", label = "Download .xlxs file")
+  titlePanel("Generate Autofilled Banner Import Templates for Mark Upload"),
+  strong("Workflow:"),
+  textInput("CW", "1. Enter the course component code as it appears on Banner (and should be the same in your Marksheet)"),
+  strong("2. Upload the template file for the course component as exported from Banner. This file should be in the .xlsx format."),
+  fileInput("bannerTemplate", NULL, buttonLabel = "2. Banner Template Sheet...", accept = ".xlsx"),
+  strong("3. Upload your marksheet. For now, the best thing is to download marks from moodle. Keep the downloaded sheet as is except change the headers for the scores to match their component name on Banner (eg. CWS2WEEk6)."),
+  fileInput("scoreSheet", NULL, buttonLabel = "3. Your Marksheet...", accept = ".xlsx"),
+  strong("Download the file using the button below. This file should be able to be imported into Banner as is!!!"),
+  br(),
+  downloadButton("download1", label = "4. Download your .xlxs file")
 )
 
 
