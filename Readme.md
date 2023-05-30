@@ -2,13 +2,16 @@
 
 ## Instructions
 
-1. Enter the course component as it appears on Banner and the header with the relevant component scores
-in your marksheet should be the same (eg. CWS2WEEk6).
 
-2. Upload the template file for the course component as exported from Banner. **This file should be in the *.xlsx* format**.
+1. Upload the template file for the course component as exported from Banner. **This file should be in the *.xlsx* format**.
 
-3. Upload your marksheet. Download this sheet from Moodle. **IMPORTANT**: Don't Change anything in the downloaded sheet except the 
-headers for the CW scores, and these match their component name on Banner (eg. CWS2WEEk6). *Save this file as .xlsx*
+2. Upload your marksheet. Download this sheet from Moodle. **IMPORTANT**: 
+- make sure this file has column headers as its first row, and values follow immediately, i.e. a tidy table 
+- student IDS appear under a column called "Username" (moodle default)
+- If a student did not attempt a component, leave that cell as blank or with "-" (defualt moodle NA value)
+- *Save this file as .xlsx*
+
+3. Select the column from **your marksheet** that contains the scores for the component template uploaded in **step 1**
 
 4. Download the file using the button. This file should be able to be imported into Banner as is!!! 
 
