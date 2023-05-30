@@ -12,9 +12,9 @@ ui <- fluidPage(
   titlePanel("Generate Autofilled Banner Import Templates for Mark Upload"),
   strong("1. Upload the template file for the course component as exported from Banner. This file should be in the .xlsx format."),
   fileInput("bannerTemplate", NULL, buttonLabel = "Banner Template Sheet...", accept = c(".xlsx", ".xls")),
-  strong("2. Upload your marksheet. Download this sheet from Moodle."),
+  strong("2. Upload your marksheet. Download this sheet from Moodle or use that as a template to enter your marks"),
   br(),
-  em("IMPORTANT: Don't Change anything in the downloaded sheet except the headers for the CW scores, that match their component name on Banner (eg. CWS2WEEk6)."),
+  em("IMPORTANT: the columns with component scores should be values only!"),
   br(),
   em("I also assume the marks are out of 100 (or a percent) for each component.  Save the file as .xlsx"),
   fileInput("scoreSheet", NULL, buttonLabel = "Your Marksheet...", accept = c(".xlsx", ".xls")),
@@ -22,6 +22,7 @@ ui <- fluidPage(
   uiOutput("u_selector"),
   br(),
   strong("4. Download the file using the button below. This file should be able to be imported into Banner as is!!!"),
+  br(),
   downloadButton("download1", label = "4. Download your .xlxs file")
 )
 
