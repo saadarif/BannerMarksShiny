@@ -33,8 +33,7 @@ server <- function(input, output, session) {
   
   #read in marksheet
   marksheet <- reactive({
-    if(is.null(input$scoreSheet))
-      return(NULL)
+    req(input$scoreSheet)
     ss <- read_excel(input$scoreSheet$datapath, 1, na=c("-",""))
     #check if Username column exists, this should be the name of the column containing student IDS
     id_col= "Username" %in% colnames(ss)
@@ -53,12 +52,13 @@ server <- function(input, output, session) {
   
   #read in and update banner template
   dataset <- reactive({
-    if(is.null(input$bannerTemplate))
-      return(NULL)
+    req(input$bannerTemplate)
     bt <-read_excel(input$bannerTemplate$datapath, 1 )
     CWComp = req(input$user_selected)
-    #TODO:
-    #Validate that CWComp column is numeric
+    #Check if CWComp is read correctly as numeric
+    is_num = is.numeric(marksheet()[[CWComp]])
+    shinyFeedback::feedbackWarning("user_selected", !is_num, "Make sure the scores column in your Marksheet is numeric or formulas only!")
+    req(is_num)
     for(id in marksheet()$Username) {
       if(!(is.na(marksheet()[[CWComp]][marksheet()["Username"] == id]))) {
         bt$Score[bt["Student ID"] == id] = round(marksheet()[[CWComp]][marksheet()["Username"] == id],digits=1)
