@@ -1,4 +1,5 @@
 library(shiny)
+library(shinyFeedback)
 library(readxl)
 library(openxlsx)
 
@@ -9,6 +10,7 @@ library(openxlsx)
 #3) Course component id as it appears on banner
 
 ui <- fluidPage(
+  shinyFeedback::useShinyFeedback(),
   titlePanel("Generate Autofilled Banner Import Templates for Mark Upload"),
   strong("1. Upload the template file for the course component as exported from Banner. This file should be in the .xlsx format."),
   fileInput("bannerTemplate", NULL, buttonLabel = "Banner Template Sheet...", accept = c(".xlsx", ".xls")),
@@ -29,21 +31,27 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   
+  #read in marksheet
   marksheet <- reactive({
     if(is.null(input$scoreSheet))
       return(NULL)
-      ss <- read_excel(input$scoreSheet$datapath, 1, na=c("-",""))
+    ss <- read_excel(input$scoreSheet$datapath, 1, na=c("-",""))
+    #check if Username column exists, this should be the name of the column containing student IDS
+    id_col= "Username" %in% colnames(ss)
+    shinyFeedback::feedbackWarning("scoreSheet", !id_col, "Make sure your marksheet has a column called 'Username' containing student IDS!")
+    req(id_col)
+    ss
   })
   
   #selecting score columns from Marksheet 
   output$u_selector <- renderUI({
-    df_local <- req(marksheet())
+    ms_local <- req(marksheet())
     selectInput("user_selected","3. Select the column (from your marksheet) containing scores for this component:",
-                choices=names(df_local),
-                selected = names(df_local)[[1]])
+                choices=names(ms_local),
+                selected = names(ms_local)[[1]])
   })
   
-
+  #read in and update banner template
   dataset <- reactive({
     if(is.null(input$bannerTemplate))
       return(NULL)
@@ -62,7 +70,7 @@ server <- function(input, output, session) {
     bt
   })
   
-  #Download file
+  #Download file for upload to banner
   output$download1 <- downloadHandler(
     filename = function() {
       paste0(basename(input$bannerTemplate$name))
