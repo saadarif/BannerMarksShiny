@@ -57,6 +57,8 @@ server <- function(input, output, session) {
       return(NULL)
     bt <-read_excel(input$bannerTemplate$datapath, 1 )
     CWComp = req(input$user_selected)
+    #TODO:
+    #Validate that CWComp column is numeric
     for(id in marksheet()$Username) {
       if(!(is.na(marksheet()[[CWComp]][marksheet()["Username"] == id]))) {
         bt$Score[bt["Student ID"] == id] = round(marksheet()[[CWComp]][marksheet()["Username"] == id],digits=1)
