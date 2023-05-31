@@ -15,10 +15,14 @@ ui <- fluidPage(
   strong("1. Upload the template file for the course component as exported from Banner. This file should be in the .xlsx format."),
   fileInput("bannerTemplate", NULL, buttonLabel = "Banner Template Sheet...", accept = c(".xlsx", ".xls")),
   strong("2. Upload your marksheet. Download this sheet from Moodle or use that as a template to enter your marks"),
+  p("Importantly, your marksheet should have the following attributes:"),
+  p("a. The headers should be in the first row and values should be in the preceeding rows, i.e. a PIP style marksheet won't work!"),
+  p("b. Student IDs should be under a columns called 'Username', this is the moodle default"),
+  p("c. Any columns with component scores should be either numeric or formulas only. All formulas should evaluate to a number."),
+  p("d. A 0 in your marks column is interpreted as an attempt where the student got 0 marks. For Not Attemped, leave the cell blank or with  '-', the moodle default for no submission"),
+  p("e. I assume the marks are out of 100 for each component, this is what Banner expects."),
+  p("f. Save the file as .xlsx."),
   br(),
-  em("IMPORTANT: the columns with component scores should be values only, formulas might also work - but you should verify this"),
-  br(),
-  em("I also assume the marks are out of 100 (or are a percentage) for each component.  Save the file as .xlsx"),
   fileInput("scoreSheet", NULL, buttonLabel = "Your Marksheet...", accept = c(".xlsx", ".xls")),
   br(),
   uiOutput("u_selector"),
@@ -50,18 +54,23 @@ server <- function(input, output, session) {
                 selected = names(ms_local)[[1]])
   })
   
-  #read in and update banner template
-  dataset <- reactive({
-    req(input$bannerTemplate)
-    bt <-read_excel(input$bannerTemplate$datapath, 1 )
+  marks <- reactive({
     CWComp = req(input$user_selected)
     #Check if CWComp is read correctly as numeric
     is_num = is.numeric(marksheet()[[CWComp]])
     shinyFeedback::feedbackWarning("user_selected", !is_num, "Make sure the scores column in your Marksheet is numeric or formulas only!")
     req(is_num)
+    CWComp
+  })
+  
+  #read in and update banner template
+  dataset <- reactive({
+    mark_col=req(marks())
+    req(input$bannerTemplate)
+    bt <-read_excel(input$bannerTemplate$datapath, 1 )
     for(id in marksheet()$Username) {
-      if(!(is.na(marksheet()[[CWComp]][marksheet()["Username"] == id]))) {
-        bt$Score[bt["Student ID"] == id] = round(marksheet()[[CWComp]][marksheet()["Username"] == id],digits=1)
+      if(!(is.na(marksheet()[[mark_col]][marksheet()["Username"] == id]))) {
+        bt$Score[bt["Student ID"] == id] = round(marksheet()[[mark_col]][marksheet()["Username"] == id],digits=1)
       }
       else{
       bt$Score[bt["Student ID"] == id] = 0
