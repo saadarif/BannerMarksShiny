@@ -13,7 +13,7 @@ ui <- fluidPage(
   shinyFeedback::useShinyFeedback(),
   titlePanel("Generate Autofilled Banner Import Templates for Mark Upload"),
   strong("1. Upload the template file for the course component as exported from Banner. This file should be in the .xlsx format."),
-  fileInput("bannerTemplate", NULL, buttonLabel = "Banner Template Sheet...", accept = c(".xlsx", ".xls")),
+  fileInput(width="500px", "bannerTemplate", NULL, buttonLabel = "Banner Template Sheet...", accept = c(".xlsx", ".xls")),
   strong("2. Upload your marksheet. Download this sheet from Moodle or use that as a template to enter your marks"),
   p("Importantly, your marksheet should have the following attributes:"),
   p("a. The headers should be in the first row and values should be in the preceeding rows, i.e. a PIP style marksheet won't work!"),
@@ -23,7 +23,7 @@ ui <- fluidPage(
   p("e. I assume the marks are out of 100 for each component, this is what Banner expects."),
   p("f. Save the file as .xlsx."),
   br(),
-  fileInput("scoreSheet", NULL, buttonLabel = "Your Marksheet...", accept = c(".xlsx", ".xls")),
+  fileInput(width="500px", "scoreSheet", NULL, buttonLabel = "Your Marksheet...", accept = c(".xlsx", ".xls")),
   br(),
   uiOutput("u_selector"),
   br(),
@@ -58,7 +58,7 @@ server <- function(input, output, session) {
     CWComp = req(input$user_selected)
     #Check if CWComp is read correctly as numeric
     is_num = is.numeric(marksheet()[[CWComp]])
-    shinyFeedback::feedbackWarning("user_selected", !is_num, "Make sure the scores column in your Marksheet is numeric or formulas only!")
+    shinyFeedback::feedbackWarning("user_selected", !is_num, "Make sure the scores column in your Marksheet is numeric or formulas only!", color="red")
     req(is_num)
     CWComp
   })
