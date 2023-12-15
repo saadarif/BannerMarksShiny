@@ -25,10 +25,11 @@ jobs:
           # account and application name (https://<accountName>.shinyapps.io/<appName>)
           appName: BannerMarksShiny
           accountName: 8ltxdw-saad-arif
+          appFiles: app.R
 
           # token and secret obtained from https://www.shinyapps.io/admin/#/tokens
           accountToken: ${{ secrets.TOKEN }}
           accountSecret: ${{ secrets.SECRET }}
           
-          appFiles: app.R
+      
           
