@@ -1,6 +1,6 @@
 # Authenticate
 library(rsconnect)
-setAccountInfo(name = '8ltxdw-saad-arif',
+setAccountInfo(name = "8ltxdw-saad-arif",
                token = Sys.getenv("$TOKEN"),
                secret = Sys.getenv("$SECRET"))
 # Deploy
