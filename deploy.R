@@ -1,5 +1,6 @@
 # Authenticate
-rsconnect::setAccountInfo(name = Sys.getenv("SHINY_ACC_NAME"),
+library(rsconnect)
+setAccountInfo(name = Sys.getenv("SHINY_ACC_NAME"),
                token = Sys.getenv("TOKEN"),
                secret = Sys.getenv("SECRET"))
 # Deploy

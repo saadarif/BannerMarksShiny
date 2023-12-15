@@ -1,4 +1,4 @@
-FROM rocker/shiny:4.3.1
+FROM rocker/shiny:4.2.1
 RUN install2.r rsconnect shinyFeedback readxl openxlsx
 WORKDIR /home/BannerMarksShiny
 COPY app.R app.R 
