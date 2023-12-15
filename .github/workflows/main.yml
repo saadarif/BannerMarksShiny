@@ -25,9 +25,8 @@ jobs:
           # account and application name (https://<accountName>.shinyapps.io/<appName>)
           appName: BannerMarksShiny
           accountName: 8ltxdw-saad-arif
-          
-          accountToken: ${{ secrets.TOKEN }}
-          accountSecret: ${{ secrets.SECRET }}
+          accountToken: ${{ secrets.SHINYAPPS_TOKEN }}
+          accountSecret: ${{ secrets.SHINYAPPS_SECRET }}
 
           appFiles: app.R
           logLevel: verbose
