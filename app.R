@@ -18,7 +18,7 @@ ui <- fluidPage(
   p("Importantly, your marksheet should have the following attributes:"),
   p("a. The headers should be in the first row and values should be in the preceeding rows, i.e. a PIP style marksheet won't work!"),
   p("b. Student IDs should be under a columns called 'Username', this is the moodle default"),
-  p("c. Any columns with component scores should be either numeric or formulas or percentage format (e.g. "75 %") only. Any formulas should evaluate to a number."),
+  p("c. Any columns with component scores should be either numeric or formulas or percentage format (e.g. '75 %') only. Any formulas should evaluate to a number."),
   p("d. A 0 in your marks column is interpreted as an attempt where the student got 0 marks. For Not Attemped, leave the cell blank or with  '-', the moodle default for no submission"),
   p("e. I assume the marks are out of 100 for each component, otherwise use Percentage only when downoloading from Moodle. This is what Banner expects."),
   p("f. Make sure you don't save it in the same folder as the empty template otherwise your computer will rename it!"),
