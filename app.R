@@ -18,10 +18,10 @@ ui <- fluidPage(
   p("Importantly, your marksheet should have the following attributes:"),
   p("a. The headers should be in the first row and values should be in the preceeding rows, i.e. a PIP style marksheet won't work!"),
   p("b. Student IDs should be under a columns called 'Username', this is the moodle default"),
-  p("c. Any columns with component scores should be either numeric or formulas only. All formulas should evaluate to a number."),
+  p("c. Any columns with component scores should be either numeric or formulas or percentage format (e.g. "75 %") only. Any formulas should evaluate to a number."),
   p("d. A 0 in your marks column is interpreted as an attempt where the student got 0 marks. For Not Attemped, leave the cell blank or with  '-', the moodle default for no submission"),
-  p("e. I assume the marks are out of 100 for each component, this is what Banner expects."),
-  p("f. Save the file as .xlsx."),
+  p("e. I assume the marks are out of 100 for each component, otherwise use Percentage only when downoloading from Moodle. This is what Banner expects."),
+  p("f. Make sure you don't save it in the same folder as the empty template otherwise your computer will rename it!"),
   br(),
   fileInput(width="500px", "scoreSheet", NULL, buttonLabel = "Your Marksheet...", accept = c(".xlsx", ".xls")),
   br(),
@@ -34,6 +34,21 @@ ui <- fluidPage(
 
 
 server <- function(input, output, session) {
+  
+  #function to check whether input column is real/numeric or % e.g. "75 %"
+get_col_info <- function(col) {
+    #check if the column is numeric and use this an expression
+    if (is.numeric(col)) { 
+      return(col)
+    }
+    else if (is.character(col)) {  #percentage values
+      return(as.numeric(sub("%", "", col)))
+    }#switch based on results
+    else {
+      shinyFeedback::feedbackWarning("user_selected", FALSE, "Make sure the scores column in your Marksheet is numeric or formulas or percentage only!", color="red")
+    }
+    
+  }
   
   #read in marksheet
   marksheet <- reactive({
@@ -57,9 +72,11 @@ server <- function(input, output, session) {
   marks <- reactive({
     CWComp = req(input$user_selected)
     #Check if CWComp is read correctly as numeric
-    is_num = is.numeric(marksheet()[[CWComp]])
-    shinyFeedback::feedbackWarning("user_selected", !is_num, "Make sure the scores column in your Marksheet is numeric or formulas only!", color="red")
-    req(is_num)
+    #if (is.numeric(marksheet()[[CWComp]]))
+    #chek if the score column is numeric or percentage only
+    score = get_col_info(marksheet()[[CWComp]])
+    print(score)
+    req(score)
     CWComp
   })
   
@@ -70,7 +87,14 @@ server <- function(input, output, session) {
     bt <-read_excel(input$bannerTemplate$datapath, 1 )
     for(id in marksheet()$Username) {
       if(!(is.na(marksheet()[[mark_col]][marksheet()["Username"] == id]))) {
-        bt$Score[bt["Student ID"] == id] = round(marksheet()[[mark_col]][marksheet()["Username"] == id],digits=1)
+          #is mark column numeric?
+          if (is.numeric(marksheet()[[mark_col]])){
+             bt$Score[bt["Student ID"] == id] = round(marksheet()[[mark_col]][marksheet()["Username"] == id],digits=1)
+          }
+          #if it is a percentage
+          else if (is.character(marksheet()[[mark_col]])) {
+             bt$Score[bt["Student ID"] == id] = round(as.numeric(sub("%", "", marksheet()[[mark_col]][marksheet()["Username"] == id])),digits=1)
+          }
       }
       else{
       bt$Score[bt["Student ID"] == id] = 0
