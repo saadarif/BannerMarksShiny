@@ -12,6 +12,7 @@ on:
       
 jobs:
   deploy:
+    environment: production
     name: Deploy to shinyapps
 
     # allow skipping deployment for commits containing '[automated]' or '[no-deploy]' in the commit message
@@ -25,8 +26,8 @@ jobs:
           # account and application name (https://<accountName>.shinyapps.io/<appName>)
           appName: BannerMarksShiny
           accountName: 8ltxdw-saad-arif
-          accountToken: ${{ secrets.SHINYAPPS_TOKEN }}
-          accountSecret: ${{ secrets.SHINYAPPS_SECRET }}
+          accountToken: ${{ secrets.TOKEN }}
+          accountSecret: ${{ secrets.SECRET }}
 
           appFiles: app.R
           logLevel: verbose
