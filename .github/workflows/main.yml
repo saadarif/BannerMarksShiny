@@ -12,7 +12,6 @@ on:
       
 jobs:
   deploy:
-    environment: production
     name: Deploy to shinyapps
 
     # allow skipping deployment for commits containing '[automated]' or '[no-deploy]' in the commit message
