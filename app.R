@@ -14,7 +14,7 @@ ui <- fluidPage(
   titlePanel("Generate Autofilled Banner Import Templates for Mark Upload"),
   strong("1. Upload the template file for the course component as exported from Banner. This file should be in the .xlsx format."),
   fileInput(width="500px", "bannerTemplate", NULL, buttonLabel = "Banner Template Sheet...", accept = c(".xlsx", ".xls")),
-  strong("2. Upload your marksheet. Download this sheet from Moodle or use that as a template to enter your marks"),
+  strong("2. Upload your marksheet. Download this sheet from Moodle, make sure to save as .xlsx file or use that as a template to enter your marks manually"),
   p("Importantly, your marksheet should have the following attributes:"),
   p("a. The headers should be in the first row and values should be in the preceeding rows, i.e. a PIP style marksheet won't work!"),
   p("b. Student IDs should be under a columns called 'Username', this is the moodle default"),
