@@ -28,5 +28,6 @@ jobs:
       - name: execute
         run: >
           docker run 
-          Rscript -e "rsconnect::setAccountInfo(name='8ltxdw-saad-arif',token=${{secrets.TOKEN}},secret=${{secrets.SECRET}} )" 
-          RScript -e "rsconnect::deployApp(appFiles = c("app.R"))" 
+          -e TOKEN=${{secrets.TOKEN}} 
+          -e SECRET=${{secrets.SECRET}} 
+          main          
